@@ -8,8 +8,14 @@ public class SearchTree {
 	public static void main(String[] args) {
 		
 	}
-	
+	/**
+	 * µ›πÈ µœ÷
+	 * @param head
+	 */
 	public static void  preSearchTree(TreeNode head){
-		
+		if(head==null) return ;
+		System.out.print("" + head.val + " ");
+		preSearchTree(head.left);
+		preSearchTree(head.right);
 	}
 }

@@ -1,4 +1,4 @@
-package www.bupt.nowCoder;
+package www.xiaowei.nowCoder;
 
 import java.util.HashMap;
 import java.util.Map;

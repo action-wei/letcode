@@ -1,4 +1,4 @@
-package www.bupt.nowCoder;
+package www.xiaowei.nowCoder;
 
 /**
  * 求连续子数组的最大和
