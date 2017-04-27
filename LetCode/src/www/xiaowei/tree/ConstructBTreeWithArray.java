@@ -16,7 +16,7 @@ public class ConstructBTreeWithArray {
 		//将一个数组转成一个ArrayList
 //		ArrayList<Integer> arraylist = new ArrayList<Integer>(Arrays.asList(levelOrder));
 		TreeNode root = constructBST(levelOrder);
-		SearchTree.preSearchTree(root);
+		SearchTree.preSearchBTree(root);
 	}
 	
 	

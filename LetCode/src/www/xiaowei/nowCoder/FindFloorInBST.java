@@ -14,11 +14,12 @@ public class FindFloorInBST {
 		Integer array[] = {15,11,21,-1,13,19,27};
 		TreeNode root = ConstructBTreeWithArray.constructBST(array);
 		System.out.println("print the BST nodes ");
-		SearchTree.preSearchTree(root);
+		SearchTree.preSearchBTree(root);
 		System.out.println();
 		System.out.println("-----test result------");
 		//测试
-		TreeNode ret = solution(root,22);
+//		TreeNode ret = solution(root,22);
+		TreeNode ret = recursive_solution(root,22);
 		if(ret!=null){
 			System.out.println(ret.val);
 		}else{
@@ -54,6 +55,13 @@ public class FindFloorInBST {
 	 * @return
 	 */
 	public static TreeNode recursive_solution(TreeNode root,int value){
-		return null;
+		if(root==null) return null;
+		if(root.val > value){
+			//当前节点的值大于value,则在左子树中继续搜索
+			return recursive_solution(root.left,value);
+		}else{
+			TreeNode flooring = recursive_solution(root.right,value);
+			return flooring!=null ? flooring : root;
+		}
 	}
 }
