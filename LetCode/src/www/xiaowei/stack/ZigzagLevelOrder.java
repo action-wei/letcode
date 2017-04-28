@@ -3,6 +3,7 @@ package www.xiaowei.stack;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 
 import www.xiaowei.tree.ConstructBTreeWithArray;
 import www.xiaowei.tree.TreeNode;
@@ -15,7 +16,7 @@ import www.xiaowei.tree.TreeNode;
  */
 public class ZigzagLevelOrder {
 	public static void main(String[] args) {
-		Integer array[] = {0,2,4,1,-1,3,10,5,1,-1,6,-1,8};
+		Integer array[] = {3,9,20,-1,-1,15,7};
 		TreeNode root = ConstructBTreeWithArray.constructBST(array);
 		System.out.println("print the BST nodes ");
 		List<List<Integer>> ret = solution(root);
@@ -29,7 +30,26 @@ public class ZigzagLevelOrder {
 	
 	public static List<List<Integer>> solution(TreeNode root){
 		List<List<Integer>> result = new ArrayList<List<Integer>>();
-		
+		Queue<TreeNode> queue = new LinkedList<TreeNode>();
+		TreeNode cur = root;
+		if(cur!=null) queue.add(cur);
+		boolean isEven = true;
+		while(!queue.isEmpty()){
+			int size = queue.size();
+			List<Integer> list = new LinkedList<Integer>();
+			while(size-->0){
+				TreeNode tmp = queue.poll();
+				if(tmp.left!=null) queue.add(tmp.left);
+				if(tmp.right!=null) queue.add(tmp.right);
+				if(isEven){
+					list.add(tmp.val);
+				}else{
+					list.add(0,tmp.val);
+				}
+			}
+			result.add(list);
+			isEven = isEven?false:true;
+		}
 		return result;
 	}
 }
