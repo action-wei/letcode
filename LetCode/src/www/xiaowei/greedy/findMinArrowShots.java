@@ -1,4 +1,4 @@
-package www.xiaowei.heap;
+package www.xiaowei.greedy;
 
 /**
  * Created by xiaowei on 2017/6/6.

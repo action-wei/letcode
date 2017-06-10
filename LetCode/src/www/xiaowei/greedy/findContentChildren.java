@@ -1,4 +1,4 @@
-package www.xiaowei.heap;
+package www.xiaowei.greedy;
 
 import java.util.Arrays;
 
@@ -7,7 +7,6 @@ import java.util.Arrays;
  * 
  * @author xiaowei
  *
- * 2017年6月5日 下午5:31:23
  */
 public class findContentChildren {
 	public static int solution(int[] g, int[] s){
