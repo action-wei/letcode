@@ -1,7 +1,7 @@
 package com.xiaowei.design;
 
 /**
- * Created by xiaowei on 2017/6/12.
+ * Created by leetcode on 2017/6/12.
  */
 
 public class skip_list<valueType> {
