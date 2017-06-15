@@ -66,7 +66,7 @@ public class Trie_tree {
         //逐个字符比较
         for(int i=0;i<word.length();i++) {
             int index = word.charAt(i)-'a';
-            if(pnode.child[index]==null || (i+1==word.length()-1 && pnode.child[index].isWord==false)) return false;
+            if(pnode.child[index]==null || (i==word.length()-1 && pnode.child[index].isWord==false)) return false;
             else{
                 pnode = pnode.child[index];
             }
@@ -83,20 +83,21 @@ public class Trie_tree {
         if(hasStr(word)) return false;
         int index = 0;
         Node pnode = this.getRoot();
-        for(int i=0;i<word.length()-1;i++){
+        for(int i=0;i<word.length();i++){
             index = word.charAt(i)-'a';
             if(pnode.child[index]==null){
                 Node node = new Node();
-                if(i+1==word.length()-1){
-                    //如果是单词的结束字符，更新前缀字符数，并设置单词标识isWrod=true
-                    node.setNum(pnode.getNum()+1);
+                if(i==word.length()-1){
+                    //如果是单词的结束字符，设置单词标识isWrod=true
                     node.setIsWord(true);
                 }
+                node.setNum(node.getNum()+1);
                 pnode.addChild(index,node);
                 pnode = node;
             }else{
                 //该字符已存在
                 pnode = pnode.getChild(index);
+                pnode.setNum(pnode.getNum()+1);
             }
         }
         return true;
@@ -149,9 +150,21 @@ public class Trie_tree {
         Node pnode = root;
         for(int i=0;i<SIZE;i++){
             if(pnode.getChild(i)!=null){
-                System.out.println((char)('a'+i)+"----");
-                search(pnode);
+                System.out.print((char)('a'+i)+"----");
+                search(pnode.getChild(i));
             }
+            System.out.println();
         }
+    }
+
+    public static void main(String[] args) {
+        Trie_tree trie_tree = new Trie_tree();
+        trie_tree.insertOneWord("zhangwei");
+        trie_tree.insertOneWord("lisumei");
+        trie_tree.insertOneWord("zhong");
+        if (trie_tree.hasStr("zhong")) {
+            System.out.println("there is word:zhong");
+        }
+        trie_tree.search(trie_tree.getRoot());
     }
 }
