@@ -12,13 +12,15 @@ public class ConsistencyHash {
     //待加入Hash环的服务器列表
     private static String[] servers = {"192.168.0.0:111", "192.168.0.1:111", "192.168.0.2:111", "192.168.0.3:111", "192.168.0.4:111"};
     // key：服务器hash值，value：服务器名称
-    private static SortedMap<Integer, String> sortedMap = new TreeMap<Integer, String>();
+    private static SortedMap<Integer, String> hashCircleMap = new TreeMap<Integer, String>();
+    //复制因子
+    private static int numReplicas = 5;
 
     static{
         for(int i=0;i<servers.length;i++) {
-            int hash = getHash(servers[i]);
+            int hash = getHashKey(servers[i]);
             System.out.println("["+servers[i]+"]加入集合中，其Hash值为："+hash);
-            sortedMap.put(hash, servers[i]);
+            hashCircleMap.put(hash, servers[i]);
         }
     }
 
@@ -27,7 +29,7 @@ public class ConsistencyHash {
      * @param str
      * @return
      */
-    private static int getHash(String str) {
+    public static int getHashKey(String str) {
         final int p = 16777619;
         int hash = (int)2166136261L;
         for(int i=0;i< str.length();i++) {
@@ -48,18 +50,31 @@ public class ConsistencyHash {
      * @param node
      * @return
      */
-    private static String getServer(String node) {
-        int hash = getHash(node);
-        SortedMap<Integer, String> subMap = sortedMap.tailMap(hash);
+    public static String getServer(String node) {
+        int hash = getHashKey(node);
+        SortedMap<Integer, String> subMap = hashCircleMap.tailMap(hash);
         //顺时针寻找
-        Integer i= subMap.isEmpty() ? sortedMap.firstKey():subMap.firstKey();
-        return sortedMap.get(i);
+        Integer i= subMap.isEmpty() ? hashCircleMap.firstKey():subMap.firstKey();
+        return hashCircleMap.get(i);
+    }
+
+    /**
+     * 移除服务器节点
+     * @return 0:没有节点可以删除 1： 删除成功
+     */
+    public static int rmServer(String node) {
+        int hash = getHashKey(node);
+        if (hashCircleMap.containsKey(hash)) {
+            hashCircleMap.remove(hash);
+            return 0;
+        }
+        return 1;
     }
 
     public static void main(String[] args) {
         String[] nodes = {"127.0.0.1:1111", "221.226.0.1:22", "10.211.0.1:33"};
         for(int i=0;i<nodes.length;i++) {
-            System.out.println("["+nodes[i]+"]的hash值为："+getHash(nodes[i])+",被路由的节点["+getServer(nodes[i])+"]");
+            System.out.println("["+nodes[i]+"]的hash值为："+ getHashKey(nodes[i])+",被路由的节点["+getServer(nodes[i])+"]");
         }
     }
 }
