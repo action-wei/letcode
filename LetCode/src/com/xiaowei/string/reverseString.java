@@ -61,5 +61,14 @@ public class reverseString {
         String sen = " world!  hello";
         String ret_sen = reverse_sen(sen);
         System.out.println(ret_sen);
+
+        System.out.println("使用异或交换字符");
+        char a ='b';
+        char b='a';
+        a = (char)(a^b);
+        b = (char)(b^a);
+        a = (char)(b^a);
+        System.out.println(a);
+        System.out.println(b);
     }
 }
