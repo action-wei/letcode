@@ -38,6 +38,56 @@ public class quickSort {
         }
     }
 
+    /**
+     * 快排方法二
+     * @param num
+     * @param begin
+     * @param end
+     * @param <T>
+     */
+    public static <T extends Comparable<T>> void sort2(T num[], int begin, int end) {
+        if(num==null || end<0 || begin<0 || begin>end || end==begin) return;
+        //取最后一位数作为基准
+        T pivot = num[end];
+        int n = begin; //n标记比基准pivot值小的下标
+        int i= n;
+        while (i < end) {
+            if (pivot.compareTo(num[i])>0) {
+                if(i!=n){
+                    swap(num,i,n);
+                }
+                n++;
+            }
+            i++;
+        }
+        //将基准数归位
+        swap(num,n,end);
+        //迭代处理[begin,i) ,(i,end]
+        if(n==end){
+            sort2(num,begin,n-1);
+        } else if (n == begin) {
+            sort2(num,n+1,end);
+        }else{
+            sort2(num,begin,n-1);
+            sort2(num, n+1, end);
+        }
+    }
+
+    /**
+     * 交换两个值
+     * @param num
+     * @param i
+     * @param t
+     * @param <T>
+     */
+    private static <T> void swap(T num[], int i, int t) {
+        T tem = num[i];
+        num[i] = num[t];
+        num[t] = tem;
+    }
+
+
+
     public static <T extends Comparable<T>> void  print(T[] nums) {
         if(null == nums || nums.length==1) return;
         int len = nums.length, i = 0;
@@ -47,8 +97,11 @@ public class quickSort {
     }
 
     public static void main(String[] args) {
-        Integer nums[] = {5,3,7,4,9,5};
-        sort(nums,0,nums.length-1);
+        Integer nums[] = {8, 2, 1, 4};
+//        System.out.println("test sort function");
+//        sort(nums,0,nums.length-1);
+        System.out.println("test function sort2:");
+        sort2(nums,0,nums.length-1);
         print(nums);
     }
 }

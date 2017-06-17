@@ -128,6 +128,10 @@ public class Trie_tree {
         return list;
     }
 
+    /**
+     * 获取某个前缀对应的所有单词
+     * @return
+     */
     public List<String> getAllPrefixWords(){
         List<String> list = new ArrayList<>();
         //todo
