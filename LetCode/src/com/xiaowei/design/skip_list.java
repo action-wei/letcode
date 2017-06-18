@@ -57,10 +57,13 @@ public class skip_list<E extends Comparable<? super E>> {
         while (curLevel >= 0) {
             if (curNode.getNext(curLevel) != null && curNode.getNext(curLevel).getValue().compareTo(val) > 0) {
                 curLevel--;
-            } else if (curNode.getNext(curLevel).getValue().compareTo(val) < 0) {
+            } else if (curNode.getNext(curLevel) != null && curNode.getNext(curLevel).getValue().compareTo(val) < 0) {
                 curNode = curNode.getNext(curLevel);
             }else{
-                curNode.setNext(curLevel,curNode.getNext(curLevel).getNext(curLevel));
+                if(curNode.getNext(curLevel)!=null)
+                    curNode.setNext(curLevel,curNode.getNext(curLevel).getNext(curLevel));
+                else
+                    curNode.setNext(curLevel,null);
                 curLevel--;
                 isExist = true;
             }
@@ -109,7 +112,9 @@ public class skip_list<E extends Comparable<? super E>> {
     public int size(){
         return this.len;
     }
-    //确定新节点的层次
+    /**
+     * 确定新节点的层次
+     */
     private int chooseLevel(int level) {
         long n = (long) 1 << (level - 1);
         long ranNum;
@@ -136,7 +141,7 @@ public class skip_list<E extends Comparable<? super E>> {
 
     //test
     public static void main(String[] args) {
-        skip_list<Integer> skipList = new skip_list<>(60);
+        skip_list<Integer> skipList = new skip_list<>(6);
         skipList.add(1);
         skipList.add(3);
         skipList.add(2);
@@ -150,7 +155,8 @@ public class skip_list<E extends Comparable<? super E>> {
         }
         System.out.println();
 
-        skipList.remove(100);
+//        skipList.remove(100);
+        skipList.remove(2);
         for(int i=0;i<skipList.size();i++) {
             System.out.println(skipList.get(i)+" ");
         }
