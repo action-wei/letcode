@@ -133,6 +133,30 @@ public class skip_list<E extends Comparable<? super E>> {
             ranLevel++;
         }
     }
+
+    //test
+    public static void main(String[] args) {
+        skip_list<Integer> skipList = new skip_list<>(60);
+        skipList.add(1);
+        skipList.add(3);
+        skipList.add(2);
+        skipList.add(4);
+        skipList.add(10);
+        skipList.add(100);
+        skipList.add(100);
+        skipList.add(99);
+        for(int i=0;i<skipList.size();i++) {
+            System.out.println(skipList.get(i)+" ");
+        }
+        System.out.println();
+
+        skipList.remove(100);
+        for(int i=0;i<skipList.size();i++) {
+            System.out.println(skipList.get(i)+" ");
+        }
+        System.out.println();
+
+    }
 }
 
 /**
