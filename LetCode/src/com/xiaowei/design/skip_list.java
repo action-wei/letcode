@@ -77,18 +77,28 @@ public class skip_list<E extends Comparable<? super E>> {
      * @return
      */
     public boolean contains(E val) {
+        return find(val)==null ? false:true;
+    }
+
+    /**
+     * ≤È’“
+     * @param val
+     * @return
+     */
+    public Node find(E val) {
         Node<E> curNode = this.head;
         int curLevel = this.level-1;
+        int index = 0;
         while (curLevel >= 0) {
             if (curNode.getNext(curLevel) == null || curNode.getNext(curLevel).getValue().compareTo(val) > 0) {
                 curLevel--;
             } else if (curNode.getNext(curLevel).getValue().compareTo(val) < 0) {
                 curNode = curNode.getNext(curLevel);
             }else{//found
-                return true;
+                return curNode.getNext(curLevel);
             }
         }
-        return false;
+        return null;
     }
 
     /**
@@ -161,6 +171,9 @@ public class skip_list<E extends Comparable<? super E>> {
             System.out.println(skipList.get(i)+" ");
         }
         System.out.println();
+
+        Node node = skipList.find(99);
+        System.out.println(node.getValue());
 
     }
 }
