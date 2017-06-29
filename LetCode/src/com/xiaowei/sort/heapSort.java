@@ -15,6 +15,7 @@ public class heapSort {
         int child_index = i*2+1;
         int currentP = nums[i];
         while(child_index < len){
+            //找出较大的孩子节点
             if(child_index+1<len && nums[child_index]<nums[child_index+1]){
                 child_index++;
             }
@@ -23,6 +24,7 @@ public class heapSort {
                 i = child_index;
                 child_index = child_index*2+1;
             }else{
+                //如果待调整节点的值大于孩子节点最大的值，则无需调整
                 break;
             }
         }
