@@ -15,7 +15,6 @@ public class heapSort {
         int child_index = i*2+1;
         int currentP = nums[i];
         while(child_index < len){
-            //如果存在孩子节点，则找出值较大的孩子节点
             if(child_index+1<len && nums[child_index]<nums[child_index+1]){
                 child_index++;
             }
@@ -24,7 +23,6 @@ public class heapSort {
                 i = child_index;
                 child_index = child_index*2+1;
             }else{
-                //当前待调整节点大于其孩子节点，则直接退出
                 break;
             }
         }
@@ -32,7 +30,7 @@ public class heapSort {
     }
 
     /**
-     * 堆排序
+     * 排序
      * @param nums
      */
     public void sort(int nums[],int len) {
@@ -41,9 +39,8 @@ public class heapSort {
             adjustHeap(nums, i,len);
             print(nums);
         }
-        //排序过程
+        //每次取第一个数（最大数）排到未排序数组的最后一位
         for(int i=len-1;i>0;i--) {
-            //交换第一位和最后一位
             int tem = nums[i];
             nums[i] = nums[0];
             nums[0] = tem;
@@ -52,7 +49,6 @@ public class heapSort {
     }
 
     public static void print(int nums[]) {
-        //打印结果
         for(int i=0;i<nums.length;i++) {
             System.out.print(nums[i]+ " ");
         }
