@@ -125,7 +125,7 @@ public class CircleQueue<T> {
     }
 
     public static void main(String[] args) {
-        CircleQueue<String> queue = new CircleQueue<String>("aaaa", 10);
+        final CircleQueue<String> queue = new CircleQueue<String>("aaaa", 10);
         Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
