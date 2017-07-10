@@ -12,131 +12,50 @@ import java.util.Queue;
 public class updateMatrix {
 
   public int[][] solution(int[][] matrix) {
-    int height = matrix.length;
-    int width = matrix[0].length;
-    int[][] result = new int[height][width];
-
-    for(int i=0;i<height;i++) {
-      for(int j=0;j<width;j++) {
-        int ret = bfs(matrix, i,j);
-        result[i][j] = ret;
-      }
-    }
-    return result;
+    return bfs(matrix);
   }
 
-  public int bfs(int[][] matrix, int i, int j) {
-    if (matrix[i][j] == 0) {
-      return 0;
-    }
-    //初始化距离为0
-    int distance = 0;
-    //广度遍历使用的字符串
-    Queue<point> queue = new LinkedList<point>();
-    //遍历方向，上右下左
-    int[][] direction = {{-1,0},{0,1},{1,0},{0,-1}};
+    /**
+     * 解题思路：bfs遍历
+     * At beginning, set cell value to Integer.MAX_VALUE if it is not 0.
+     * If newly calculated distance >= current distance, then we don't need to explore that cell again.
+     * @param matrix
+     * @return
+     */
+  public int[][] bfs(int[][] matrix) {
+      int nrow = matrix.length;
+      int ncol = matrix[0].length;
 
-    queue.add(new point(i, j));
+      //广度遍历使用的队列
+      Queue<int[]> queue = new LinkedList<>();
 
-    while (!queue.isEmpty()) {
-      point  po = queue.poll();
-      int x = po.getX();
-      int y = po.getY();
-
-      //distance+1
-      distance++;
-
-      //开始遍历该点点上右下左
-      //向上方向
-      if(validate(matrix,x, y,direction[0])){
-        int xx = x+direction[0][0];
-        int yy = y+direction[0][1];
-        if(matrix[xx][yy]==0){
-          return distance;
-        }else{
-          queue.add(new point(xx, yy));
-        }
-      }
-      //向右方向
-      if (validate(matrix, x, y, direction[1])) {
-        int xx = x+direction[1][0];
-        int yy = y+direction[1][1];
-        if (matrix[xx][yy]==0){
-          return distance;
-        }else{
-          queue.add(new point(xx, yy));
-        }
-      }
-      //向下方向
-      if (validate(matrix, x, y, direction[2])) {
-        int xx = x+direction[2][0];
-        int yy = y+direction[2][1];
-        if (matrix[xx][yy] == 0) {
-          return distance;
-        }else{
-          queue.add(new point(xx, yy));
-        }
-
-      }
-      //向左方向
-      if (validate(matrix, x, y, direction[3])) {
-        int xx = x+direction[3][0];
-        int yy = y+direction[3][1];
-        if (matrix[xx][yy] == 0) {
-          return distance;
-        }else{
-          queue.add(new point(xx, yy));
-        }
-
+      for (int i = 0; i < nrow; i++) {
+          for (int j = 0; j < ncol; j++) {
+              if (matrix[i][j] == 0) {
+                  queue.add(new int[]{i, j});
+              } else {
+                  matrix[i][j] = Integer.MAX_VALUE;
+              }
+          }
       }
 
-    }
-    return distance;
-  }
 
-  /**
-   * 判断下一个点是否存在
-   * @param matrix
-   * @param i
-   * @param j
-   * @param direction
-   * @return
-   */
-  public boolean validate(int[][] matrix, int i, int j,int[] direction) {
-    int height = matrix.length;
-    int width = matrix[0].length;
-    if (0 <= i + direction[0] && i + direction[0] < height && 0 <= j + direction[1]
-        && j + direction[1] < width) {
-      return true;
-    }else{
-      return false;
-    }
-  }
+      //遍历方向，上右下左
+      int[][] direction = {{-1, 0}, {0, 1}, {1, 0}, {0, -1}};
 
-  public class point{
-    private int x;
-    private int y;
+      while (!queue.isEmpty()) {
+          int[] cell = queue.poll();
 
-    public point(int x, int y) {
-      this.x = x;
-      this.y = y;
-    }
-
-    public int getX() {
-      return x;
-    }
-
-    public void setX(int x) {
-      this.x = x;
-    }
-
-    public int getY() {
-      return y;
-    }
-
-    public void setY(int y) {
-      this.y = y;
-    }
+          //开始遍历该点上右下左
+          for (int[] d : direction) {
+              int r = cell[0] + d[0];
+              int c = cell[1] + d[1];
+              if (r < 0 || r >=nrow || c < 0 || c >=ncol || matrix[r][c] <= matrix[cell[0]][cell[1]] + 1) continue;
+              queue.add(new int[]{r, c});
+              matrix[r][c] = matrix[cell[0]][cell[1]] + 1;
+          }
+      }
+      return matrix;
   }
 
   public static void main(String[] args) {
