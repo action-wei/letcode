@@ -1,4 +1,4 @@
-package com.xiaowei.com.xiaowei.test;
+package com.xiaowei.test;
 
 /**
  * ²âÊÔÀàµÄ¼ÓÔØË³Ğò
